@@ -4,11 +4,13 @@ import connect from "./database/connect.js"
 import User from "./models/user.js"
 import axios from "axios"
 import bcrypt from "bcryptjs"
+import cookieParser from "cookie-parser"
 const base = 'https://api.themoviedb.org/3'
 dotenv.config()
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
 
 
 app.post("/api/signup",async (req,res)=>{
@@ -41,6 +43,8 @@ app.post("/api/login",async (req,res)=>{
     if (!(await bcrypt.compare(password,thisUser.password))){
         return res.json({success:false,msg:"Invalid password"})
     }
+    jwt=thisUser.createJWT()
+    res.cookie("token",jwt,{httpOnly:true})
     return res.json({success:true,msg:"user logged in"})
 })
 app.get("/api/movies",async(req,res)=>{
