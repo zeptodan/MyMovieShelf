@@ -13,14 +13,14 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
-app.use(notFound)
-app.use(errorHandler)
-
-app.route("/api/movies",movieRouter)
-app.route("/api/user",auth,userRouter)
 
 app.post("/api/signup",signup)
 app.post("/api/login",login)
+
+app.use("/api/movies",movieRouter)
+app.use("/api/user",auth,userRouter)
+app.use(notFound)
+app.use(errorHandler)
 
 const start = async ()=>{
     try {

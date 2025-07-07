@@ -14,6 +14,29 @@ const getMovie = async(req,res)=>{
         res.status(500).json({ error: "Failed to fetch movie" });
     }
 }
+const getMovieByGenre = async(req,res)=>{
+    try {
+        const genre_id= req.query.genre_id
+        const movies = await axios.get(`${base}/discover/movie`,{
+            params: {
+                api_key:process.env.TMDB_KEY,
+                with_genres: genre_id
+            }
+        })
+        return res.json(movies.data)
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch movies" });
+    }
+}
+//testing only
+const getMovieGenres = async(req,res)=>{
+    try {
+        const movieGenreList = await movieGenres()
+        return res.json(movieGenreList)
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch movie genres" });
+    }
+}
 const getMovieSearch = async(req,res)=>{
     try {
         const search= req.query.search
@@ -68,4 +91,12 @@ const topRatedMovies= async(page)=>{
     })
     return movies.data
 }
-export {getPopularMovies,getTopRatedMovies,getMovie,getMovieSearch}
+const movieGenres= async()=>{
+    const movieGenres = await axios.get(`${base}/genre/movie/list`,{
+        params: {
+            api_key:process.env.TMDB_KEY,
+        }
+    })
+    return movieGenres.data
+}
+export {getPopularMovies,getTopRatedMovies,getMovie,getMovieSearch,getMovieGenres,getMovieByGenre}
