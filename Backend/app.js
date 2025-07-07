@@ -1,26 +1,22 @@
 import express from "express"
 import dotenv from "dotenv"
 import connect from "./database/connect.js"
-import axios from "axios"
 import cookieParser from "cookie-parser"
 import { signup,login } from "./controllers/LoginSignup.js"
-const base = 'https://api.themoviedb.org/3'
+import movieRouter from "./routes/moviesRoute.js"
+import userRouter from "./routes/userRoute.js"
+import auth from "./middleware/auth.js"
 dotenv.config()
 
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
+app.route("/api/movies",movieRouter)
+app.route("/api/user",auth,userRouter)
 
 app.post("/api/signup",signup)
 app.post("/api/login",login)
-app.get("/api/movies",async(req,res)=>{
-    const movies = await axios.get(`${base}/movie/popular`,{
-        params: {api_key:process.env.TMDB_KEY}
-    })
-    res.json(movies.data)
-})
-
 
 const start = async ()=>{
     try {
