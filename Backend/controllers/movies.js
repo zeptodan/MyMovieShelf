@@ -17,10 +17,12 @@ const getMovie = async(req,res)=>{
 const getMovieByGenre = async(req,res)=>{
     try {
         const genre_id= req.query.genre_id
+        const page = req.query.page || 1
         const movies = await axios.get(`${base}/discover/movie`,{
             params: {
                 api_key:process.env.TMDB_KEY,
-                with_genres: genre_id
+                with_genres: genre_id,
+                page:page
             }
         })
         return res.json(movies.data)
