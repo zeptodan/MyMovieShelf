@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import Movielist from "../models/movielist.js";
 import bcrypt from "bcryptjs";
 const signup = async (req,res)=>{
     const {name,password} = req.body;
@@ -12,7 +13,8 @@ const signup = async (req,res)=>{
     if(isUser){
         return res.json({success:false,msg:"Name already taken"})
     }
-    User.create(req.body)
+    const thisUser=await User.create(req.body)
+    await Movielist.create({userID:thisUser._id})
     return res.json({success:true,msg:"user created"})
 }
 
