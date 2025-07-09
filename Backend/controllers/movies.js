@@ -1,4 +1,6 @@
 import axios from "axios"
+import jwt from "jsonwebtoken"
+import Movielist from "../models/movielist.js"
 const base = 'https://api.themoviedb.org/3'
 const img_base = "https://image.tmdb.org/t/p/w500"
 const getMovie = async(req,res)=>{
@@ -13,6 +15,28 @@ const getMovie = async(req,res)=>{
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch movie" });
     }
+}
+const getHome = async(req,res)=>{
+    const popular = await popularMovies()
+    const top_rated = await topRatedMovies()
+    let home = {popular:popular.results.slice(0,10),top_rated:top_rated.results.slice(0,10)}
+    const token = req.cookies.token
+    if(token){
+        try {
+            const payload=jwt.verify(token,process.env.JWT_KEY) 
+            const {userID} = payload
+            const list = await Movielist.findOne({userID:userID,"list.type":"watchlist"},{list:{$slice:[0,10]}})
+            home.watchlist = list.list
+            return res.json(home);
+        } catch (error) {
+            console.log(error.message)
+            return res.json(home);
+        }
+    }
+    else{
+        return res.json(home);
+    }
+
 }
 const getMovieByGenre = async(req,res)=>{
     try {
@@ -101,4 +125,4 @@ const movieGenres= async()=>{
     })
     return movieGenres.data
 }
-export {getPopularMovies,getTopRatedMovies,getMovie,getMovieSearch,getMovieGenres,getMovieByGenre}
+export {getPopularMovies,getTopRatedMovies,getMovie,getMovieSearch,getMovieGenres,getMovieByGenre,getHome}

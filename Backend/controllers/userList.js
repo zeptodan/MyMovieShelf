@@ -4,9 +4,11 @@ import axios from "axios"
 const getList = async(req,res)=>{
     const {userID} = req.user
     const type = req.query.type || "watchlist"
+    const page = req.query.page || 1
     try{
         const list = await Movielist.findOne({userID:userID,"list.type":type})
-        return res.json(list.list)
+        const obj = {pages:Math.ceil(list.length/20),list:list.list.slice(page*20,page*20+20)}
+        return res.json(obj)
     }
     catch{
         return res.json({success:false,msg:"something went wrong"})
@@ -55,5 +57,8 @@ const updateRating = async(req,res)=>{
     }
     return res.json({success:true,msg:"Updated successfully"})
 }
+const loggedin = async(req,res)=>{
+    return json({msg:"logged in"})
+}
 
-export {getList,postMovie,updateRating}
+export {getList,postMovie,updateRating,loggedin}
