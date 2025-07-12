@@ -58,7 +58,7 @@ const updateRating = async(req,res)=>{
     return res.json({success:true,msg:"Updated successfully"})
 }
 const loggedin = async(req,res)=>{
-    return json({success:true,msg:"logged in",user:req.user.name})
+    return res.json({success:true,msg:"logged in",user:req.user.name})
 }
 const logout = async(req,res)=>{
     if (!req.cookies.token){

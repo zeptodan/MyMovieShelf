@@ -19,8 +19,10 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(helmet())
-app.use(cors())
-app.use(xss())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
 app.use(rateLimiter({
     windowMs:15*60*1000,
     limit:100
