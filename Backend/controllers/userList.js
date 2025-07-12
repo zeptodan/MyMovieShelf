@@ -58,7 +58,16 @@ const updateRating = async(req,res)=>{
     return res.json({success:true,msg:"Updated successfully"})
 }
 const loggedin = async(req,res)=>{
-    return json({msg:"logged in"})
+    return json({success:true,msg:"logged in",user:req.user.name})
+}
+const logout = async(req,res)=>{
+    if (!req.cookies.token){
+        return res.json({success:false,msg:"Not logged in"})
+    }
+    res.clearCookie("token",{
+        httpOnly:true,
+    })
+    return json({success:true,msg:"logged out"})
 }
 
-export {getList,postMovie,updateRating,loggedin}
+export {getList,postMovie,updateRating,loggedin,logout}
