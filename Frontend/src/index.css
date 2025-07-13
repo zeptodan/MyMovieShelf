@@ -4,4 +4,10 @@
     /* #0A0F2C #DC143C */
     --color-darkBlue: #050814;
     --color-crimsonRed: #dc2626;
+    --font-family-roboto: 'Roboto', sans-serif;
+}
+@layer base {
+    body {
+        @apply font-family-roboto;
+    }
 }
