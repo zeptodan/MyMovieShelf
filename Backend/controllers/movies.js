@@ -2,7 +2,6 @@ import axios from "axios"
 import jwt from "jsonwebtoken"
 import Movielist from "../models/movielist.js"
 const base = 'https://api.themoviedb.org/3'
-const img_base = "https://image.tmdb.org/t/p/w500"
 const getMovie = async(req,res)=>{
     try {
         const movie_id= req.params.movie_id
@@ -26,7 +25,12 @@ const getHome = async(req,res)=>{
             const payload=jwt.verify(token,process.env.JWT_KEY) 
             const {userID} = payload
             const list = await Movielist.findOne({userID:userID,"list.type":"watchlist"},{list:{$slice:[0,10]}})
-            home.watchlist = list.list
+            if (list) {
+                home.watchlist = list.list
+            }
+            else {
+                home.watchlist = []
+            }
             return res.json(home);
         } catch (error) {
             console.log(error.message)

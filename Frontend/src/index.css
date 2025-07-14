@@ -8,6 +8,15 @@
 }
 @layer base {
     body {
-        @apply font-family-roboto;
+        @apply font-family-roboto bg-darkBlue text-white overflow-x-hidden;
+    }
+}
+@layer utilities {
+    .carousel::-webkit-scrollbar {
+        display: none;
+    }
+    .carousel {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }
