@@ -23,7 +23,7 @@ const Navbar = () => {
                         <button className='w-8 aspect-square' onClick={() => setIsOpen(!isOpen)}>
                             <FaUser className='w-8 h-8' />
                         </button>
-                        {isOpen && <div className='absolute flex flex-col items-center bg-blue-950 rounded-b-sm p-4 right-1/2 translate-x-1/2 space-y-2 shadow-lg z-50'>
+                        {isOpen && <div className='absolute flex flex-col items-center bg-blue-950 rounded-b-sm p-4 right-1/2 translate-x-1/2 space-y-2 shadow-lg z-50 border border-darkBlue border-t-0'>
                             <a href="/userlist/watchlist" className=' hover:text-crimsonRed'>Watchlist</a>
                             <a href="/userlist/completed" className=' hover:text-crimsonRed'>Profile</a>
                             <button className='bg-crimsonRed rounded-sm px-4 py-2 hover:bg-red-900' onClick={handleLogout}>Logout</button>

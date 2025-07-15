@@ -28,9 +28,6 @@ const getHome = async(req,res)=>{
             if (list) {
                 home.watchlist = list.list
             }
-            else {
-                home.watchlist = []
-            }
             return res.json(home);
         } catch (error) {
             console.log(error.message)
