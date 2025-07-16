@@ -32,6 +32,7 @@ const Login = () => {
                 <button type="submit" className="bg-darkBlue rounded-sm py-2 my-2">Login</button>
             </form>
             <p className="text-center">Don't have an account? Register <a className="text-crimsonRed font-semibold" href="/register">Here</a></p>
+            <a href="/" className="mt-2 text-center hover:text-crimsonRed">Go Home</a>
         </div>
     </div>
   );

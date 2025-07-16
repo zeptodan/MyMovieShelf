@@ -40,7 +40,7 @@ const MovieList = () => {
             <h1 className="text-3xl mt-8 ml-8 font-bold">{title}</h1>
           }
           {movies && movies.results.length > 0 && 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 place-items-center">
               {movies.results.map((movie, index) => (
                 <Card key={index} movie={movie} />
               ))}
