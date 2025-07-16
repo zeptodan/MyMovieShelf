@@ -14,7 +14,7 @@ function AppLayout() {
       {!(hideNavbarRoutes.includes(location.pathname)) && <Navbar />}
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/movielist/:type" element={<MovieList/>} />
+        <Route path="/movielist/:paramtype" element={<MovieList/>} />
         <Route path="/userlist/:type" element={<UserList/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />

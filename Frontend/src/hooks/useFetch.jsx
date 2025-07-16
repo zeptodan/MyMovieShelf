@@ -3,8 +3,7 @@ import api from '../utilities/api';
 const useFetch = (url, params = {}) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -16,12 +15,11 @@ const useFetch = (url, params = {}) => {
                 setData(res.data);
             } catch (err) {
                 setError(err.message);
-            } finally {
-                setLoading(false);
             }
         };
         fetchData();
-    }, [url, options]);
+    }, [url,JSON.stringify(params)]);
 
-    return { data, error, loading };
+    return { data, error };
 }
+export default useFetch;

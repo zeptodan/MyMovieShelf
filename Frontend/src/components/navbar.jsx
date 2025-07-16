@@ -10,13 +10,20 @@ const Navbar = () => {
         // Logic for logging out the user
         console.log("User logged out");
     };
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        const query = e.target.query.value;
+        if (query) {
+            window.location.href = `/movielist/search?query=${query}`;
+        }
+    };
     return (
         <nav className='relative w-screen h-16 bg-blue-950 text-white flex items-center justify-between px-4 shadow-2xl border-b border-darkBlue z-50'>
             <a href='/' className='text-2xl md:text-3xl text-crimsonRed'>My Movie Shelf</a>
-            <div className='h-8 flex items-center bg-white rounded-full overflow-hidden w-1/3'>
-                <input className=" pl-4 h-full border-r-2 border-gray-700 text-black w-full" type="text" name="search" placeholder="Search" />
+            <form onSubmit={handleSearchSubmit} className='h-8 flex items-center bg-white rounded-full overflow-hidden w-1/3'>
+                <input className=" pl-4 h-full border-r-2 border-gray-700 text-black w-full" type="text" name="query" placeholder="Search" />
                 <button className='h-full w-12 flex justify-center items-center'><FaSearch color='black' /></button>
-            </div>
+            </form>
             <div className='flex space-x-4'>
                 {isAuthenticated ? 
                     <div className='relative mr-4 md:mr-12' onMouseEnter={()=> window.innerWidth > 768 && setIsOpen(true)} onMouseLeave={()=> window.innerWidth > 768 && setIsOpen(false)}>
@@ -25,7 +32,7 @@ const Navbar = () => {
                         </button>
                         {isOpen && <div className='absolute flex flex-col items-center bg-blue-950 rounded-b-sm p-4 right-1/2 translate-x-1/2 space-y-2 shadow-lg z-50 border border-darkBlue border-t-0'>
                             <a href="/userlist/watchlist" className=' hover:text-crimsonRed'>Watchlist</a>
-                            <a href="/userlist/completed" className=' hover:text-crimsonRed'>Profile</a>
+                            <a href="/userlist/completed" className=' hover:text-crimsonRed'>Completed</a>
                             <button className='bg-crimsonRed rounded-sm px-4 py-2 hover:bg-red-900' onClick={handleLogout}>Logout</button>
                         </div>}
                     </div> : 
