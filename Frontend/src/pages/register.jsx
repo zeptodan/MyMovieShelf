@@ -32,7 +32,7 @@ const Register = () => {
                 <input className="bg-white rounded-sm text-black px-2 h-8" type="password" name="password" id="password" placeholder="Password"/>
                 <br />
                 {error && <p className="text-red-500 text-sm">{error}</p>}
-                <button type="submit" className="bg-darkBlue rounded-sm py-2 my-2">Register</button>
+                <button type="submit" className="bg-darkBlue rounded-sm py-2 my-2 hover:bg-crimsonRed transition-colors duration-300">Register</button>
             </form>
             <p className="text-center">Already have an account? Login <a className="text-crimsonRed font-semibold" href="/login">Here</a></p>
             <a href="/" className="mt-2 text-center hover:text-crimsonRed">Go Home</a>

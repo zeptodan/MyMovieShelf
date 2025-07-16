@@ -32,7 +32,7 @@ const postMovie = async(req,res)=>{
                     api_key:process.env.TMDB_KEY,
                 }
             })
-            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_url:TMDBmovie.data.poster_path,type:type}
+            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_url:TMDBmovie.data.poster_path,type:type,release_date:TMDBmovie.data.release_date,original_language:TMDBmovie.data.original_language,vote_average:TMDBmovie.data.vote_average}
             await Movielist.updateOne(
                 {userID:userID},
                 {$push : {list:movie}}
@@ -67,7 +67,7 @@ const logout = async(req,res)=>{
     res.clearCookie("token",{
         httpOnly:true,
     })
-    return json({success:true,msg:"logged out"})
+    return res.json({success:true,msg:"logged out"})
 }
 
 export {getList,postMovie,updateRating,loggedin,logout}

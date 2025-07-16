@@ -27,6 +27,18 @@ const MovieSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: [true,"No id provided"],
+    },
+    release_date: {
+        type: String,
+        required: [true,"No release date provided"],
+    },
+    original_language: {
+        type: String,
+        required: [true,"No original language provided"],
+    },
+    vote_average: {
+        type: Number,
+        required: [true,"No vote average provided"],
     }
 },{_id:false})
 
