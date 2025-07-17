@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import api from "../utilities/api";
 import {FaPlus,FaCheck} from "react-icons/fa";
+import { useAuth } from "../contexts/authProvider";
 const Card = ({movie }) => {
     const imgBase = import.meta.env.VITE_IMG_BASE || "https://image.tmdb.org/t/p/";
+    const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
     const handleClick = (e) => {
         e.preventDefault();
@@ -11,6 +13,9 @@ const Card = ({movie }) => {
     }
     const handleAddToList = async(e) =>{
         e.stopPropagation();
+        if (!isAuthenticated) {
+            navigate("/login");
+        }
         const type = e.currentTarget.id;
         const id = e.currentTarget.parentElement.parentElement.id;
         const res = await api.post('/user/list', { id, type })

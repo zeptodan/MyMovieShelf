@@ -6,6 +6,7 @@ import MovieList from "./pages/movielist";
 import UserList from "./pages/userlist";
 import Register from "./pages/register";
 import Login from "./pages/login";
+import SingleMovie from "./pages/singlemovie";
 function AppLayout() {
   const location = useLocation();
   const hideNavbarRoutes = ["/login", "/register"];
@@ -18,6 +19,8 @@ function AppLayout() {
         <Route path="/userlist/:type" element={<UserList/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/movie/:id" element={<SingleMovie/>} />
+        <Route path="*" element={<div className="flex flex-col justify-center items-center h-screen w-screen"><p className="text-5xl">😢404 Not Found</p><a href="/" className="text-2xl mt-4 p-4 bg-crimsonRed text-white rounded">Go Home</a></div>} />
       </Routes>
     </>
   )

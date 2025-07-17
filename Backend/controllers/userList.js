@@ -69,5 +69,21 @@ const logout = async(req,res)=>{
     })
     return res.json({success:true,msg:"logged out"})
 }
+const deleteMovie = async(req,res)=>{
+    const {userID} = req.user
+    const id = req.params.id
+    try {
+        const result = await Movielist.updateOne(
+            {userID:userID},
+            {$pull : {list:{id:id}}}
+        )
+        if (result.modifiedCount === 0) {
+            return res.json({success:false,msg:"Movie not found in list"})
+        }
+        return res.json({success:true,msg:"Deleted successfully"})
+    } catch (error) {
+        return res.json({success:false,msg:"Failed to delete"})
+    }
+}
 
-export {getList,postMovie,updateRating,loggedin,logout}
+export {getList,postMovie,updateRating,loggedin,logout,deleteMovie}
