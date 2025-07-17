@@ -16,8 +16,7 @@ const getList = async(req,res)=>{
 }
 const postMovie = async(req,res)=>{
     const {userID} = req.user
-    const type = req.query.type
-    const id = req.query.id
+    const {id,type} = req.body
     const existing=await Movielist.findOne({userID:userID,"list.id":id})
     if (existing){
         await Movielist.updateOne(
@@ -32,13 +31,14 @@ const postMovie = async(req,res)=>{
                     api_key:process.env.TMDB_KEY,
                 }
             })
-            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_url:TMDBmovie.data.poster_path,type:type,release_date:TMDBmovie.data.release_date,original_language:TMDBmovie.data.original_language,vote_average:TMDBmovie.data.vote_average}
+            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_path:TMDBmovie.data.poster_path,type:type,release_date:TMDBmovie.data.release_date,original_language:TMDBmovie.data.original_language,vote_average:TMDBmovie.data.vote_average}
             await Movielist.updateOne(
                 {userID:userID},
                 {$push : {list:movie}}
             )
             return res.json({success:true,msg:"added successfully"})
         } catch (error) {
+            console.log(error.message)
             return res.json({success:false,msg:"Failed to add"})
         }
     }

@@ -6,7 +6,7 @@ const MovieSchema = new mongoose.Schema({
         required : [true,"No title provided"],
         trim : true
     },
-    poster_url:{
+    poster_path:{
         type: String,
         required: [true,"No url provided"]
     },

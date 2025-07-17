@@ -1,6 +1,7 @@
 import axios from "axios"
 import jwt from "jsonwebtoken"
 import Movielist from "../models/movielist.js"
+import mongoose from "mongoose"
 const base = 'https://api.themoviedb.org/3'
 const getMovie = async(req,res)=>{
     try {
@@ -24,9 +25,28 @@ const getHome = async(req,res)=>{
         try {
             const payload=jwt.verify(token,process.env.JWT_KEY) 
             const {userID} = payload
-            const list = await Movielist.findOne({userID:userID,"list.type":"watchlist"},{list:{$slice:[0,10]}})
-            if (list) {
-                home.watchlist = list.list
+            const list = await Movielist.aggregate([
+                { $match: { userID:new mongoose.Types.ObjectId(userID) } },
+                {
+                    $project: {
+                        list: {
+                            $slice: [
+                                {
+                                    $filter: {
+                                        input: "$list",
+                                        as: "item",
+                                        cond: { $eq: ["$$item.type", "watchlist"] }
+                                    }
+                                },
+                                10
+                            ]
+                        }
+                    }
+                }
+            ]);
+            const watchlist = list[0]?.list || [];
+            if (watchlist) {
+                home.watchlist = watchlist
             }
             return res.json(home);
         } catch (error) {
