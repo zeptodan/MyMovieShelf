@@ -55,8 +55,8 @@ const SingleMovie = () => {
             <img src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`} alt={movie.title} />
             <div className="m-2">
               <h1 className="text-3xl font-bold">{movie.title}</h1>
-              <p className="my-2 font-light">{movie.overview}</p>
-              <div className="flex flex-col space-y-2 text-gray-500">
+              <p className="my-4 font-light">{movie.overview}</p>
+              <div className="flex flex-col space-y-2 my-6 text-gray-500">
                 <p>Genres: {movie.genres.map(genre => genre.name).join(", ")}</p>
                 <p>Release Date: {movie.release_date}</p>
                 <p>Language: {movie.original_language.toUpperCase()}</p>
