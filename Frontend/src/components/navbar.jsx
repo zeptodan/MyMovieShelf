@@ -27,7 +27,7 @@ const Navbar = () => {
         }
     };
     return (
-        <nav className='relative w-screen h-16 bg-blue-950 text-white flex items-center justify-between px-4 shadow-2xl border-b border-darkBlue z-50'>
+        <nav className='relative w-screen h-16 bg-blue-950 text-white flex items-center justify-between px-4 shadow-2xl border-b border-darkBlue z-40'>
             <a href='/' className='text-2xl md:text-3xl text-crimsonRed'>My Movie Shelf</a>
             <form onSubmit={handleSearchSubmit} className='h-8 flex items-center bg-white rounded-full overflow-hidden w-1/3'>
                 <input className=" pl-4 h-full border-r-2 border-gray-700 text-black w-full" type="text" name="query" placeholder="Search" />

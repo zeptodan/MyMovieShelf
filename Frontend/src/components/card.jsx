@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import api from "../utilities/api";
 import {FaPlus,FaCheck} from "react-icons/fa";
 import { useAuth } from "../contexts/authProvider";
+import { useNotification } from "../contexts/notificationProvider";
 const Card = ({movie }) => {
     const imgBase = import.meta.env.VITE_IMG_BASE || "https://image.tmdb.org/t/p/";
     const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
+    const { addNotification } = useNotification();
     const handleClick = (e) => {
         e.preventDefault();
         const id = e.currentTarget.id
@@ -18,13 +20,12 @@ const Card = ({movie }) => {
         }
         const type = e.currentTarget.id;
         const id = e.currentTarget.parentElement.parentElement.id;
-        const res = await api.post('/user/list', { id, type })
-        if (res.status !== 200 || res.data.success === false) {
-            // Logic to add movie to watchlist
-            console.log(`Adding movie ${id} to ${type} list ${res.data.msg}`);
-        } else {
-            // Logic to add movie to watched list
-            console.log(`Adding movie ${id} to watched list`);
+        try {
+            const res = await api.post('/user/list', { id, type })
+            addNotification(res.data.msg || "Failed to add movie to list");
+        } catch (error) {
+            console.error(`Failed to add movie ${id} to ${type} list:`, error);
+            addNotification("Failed to add movie to list");
         }
     }
     return (

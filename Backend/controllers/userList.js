@@ -22,7 +22,7 @@ const postMovie = async(req,res)=>{
         await Movielist.updateOne(
             {userID:userID,"list.id":id},
             {$set:{"list.$.type":type}})
-        return res.json({success:true,msg:"Updated successfully"})
+        return res.json({success:true,msg:`updated to ${type}`})
     }
     else{
         try {
@@ -36,9 +36,8 @@ const postMovie = async(req,res)=>{
                 {userID:userID},
                 {$push : {list:movie}}
             )
-            return res.json({success:true,msg:"added successfully"})
+            return res.json({success:true,msg:`added to ${type}`})
         } catch (error) {
-            console.log(error.message)
             return res.json({success:false,msg:"Failed to add"})
         }
     }
@@ -55,7 +54,7 @@ const updateRating = async(req,res)=>{
     } catch (error) {
         return res.json({success:false,msg:"Failed to update"})
     }
-    return res.json({success:true,msg:"Updated successfully"})
+    return res.json({success:true,msg:"Updated rating"})
 }
 const loggedin = async(req,res)=>{
     return res.json({success:true,msg:"logged in",user:req.user.name})
@@ -80,9 +79,9 @@ const deleteMovie = async(req,res)=>{
         if (result.modifiedCount === 0) {
             return res.json({success:false,msg:"Movie not found in list"})
         }
-        return res.json({success:true,msg:"Deleted successfully"})
+        return res.json({success:true,msg:"Removed from list"})
     } catch (error) {
-        return res.json({success:false,msg:"Failed to delete"})
+        return res.json({success:false,msg:"Failed to remove from list"})
     }
 }
 

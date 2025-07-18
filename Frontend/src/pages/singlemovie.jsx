@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/authProvider";
+import { useNotification } from "../contexts/notificationProvider";
 const SingleMovie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const {isAuthenticated} = useAuth();
+  const { addNotification } = useNotification();
   const navigate = useNavigate();
   const handleAddToList = async (e) => {
     if (!isAuthenticated) {
@@ -18,11 +20,10 @@ const SingleMovie = () => {
     const type = e.currentTarget.id;
     try {
       const res = await api.post('/user/list', { id, type });
-      if (res.status === 200 && res.data.success) {
-        console.log(`Movie ${id} added to ${type} list successfully.`);
-      }
+      addNotification(res.data.msg || "Failed to add movie to list");
     } catch (error) {
       console.error(`Failed to add movie ${id} to ${type} list:`, error);
+      addNotification("Failed to add movie to list");
     }
   };
   const handleRemoveFromList = async (e) => {
@@ -30,11 +31,12 @@ const SingleMovie = () => {
       navigate("/login");
       return;
     }
-    const res = await api.delete(`/user/${id}`);
-    if (res.status === 200 && res.data.success) {
-      console.log(`Movie ${id} removed from list successfully.`);
-    } else {
-      console.error(`Failed to remove movie ${id} from list:`, res.data.msg);
+    try {
+      const res = await api.delete(`/user/${id}`);
+      addNotification(res.data.msg || "Failed to remove movie from list");
+    } catch (error) {
+      console.error(`Failed to remove movie ${id} from list:`, error);
+      addNotification("Failed to remove movie from list");
     }
   }
   useEffect(() => {
