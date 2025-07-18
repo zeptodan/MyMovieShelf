@@ -3,6 +3,7 @@ import {FaSearch} from 'react-icons/fa';
 import { useAuth } from '../contexts/authProvider';
 import { FaUser,FaBars } from 'react-icons/fa';
 import {genres} from '../utilities/genres';
+import { Link } from 'react-router-dom';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,8 +42,8 @@ const Navbar = () => {
                         </button>
                         {isOpen && <div className='absolute flex flex-col items-center bg-blue-950 rounded-b-sm p-4 right-1/2 translate-x-1/2 space-y-2 shadow-lg z-50 border border-darkBlue border-t-0'>
                             <p className='font-bold'>{user}</p>
-                            <a href="/userlist/watchlist" className=' hover:text-crimsonRed'>Watchlist</a>
-                            <a href="/userlist/completed" className=' hover:text-crimsonRed'>Completed</a>
+                            <Link to="/userlist/watchlist" className=' hover:text-crimsonRed'>Watchlist</Link>
+                            <Link to="/userlist/completed" className=' hover:text-crimsonRed'>Completed</Link>
                             <button className='bg-crimsonRed rounded-sm px-4 py-2 hover:bg-red-900' onClick={handleLogout}>Logout</button>
                         </div>}
                     </div> : 

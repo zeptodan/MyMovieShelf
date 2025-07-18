@@ -1,16 +1,39 @@
 import Movielist from "../models/movielist.js"
 import axios from "axios"
-
+import mongoose from "mongoose"
 const getList = async(req,res)=>{
     const {userID} = req.user
     const type = req.query.type || "watchlist"
     const page = req.query.page || 1
     try{
-        const list = await Movielist.findOne({userID:userID,"list.type":type})
-        const obj = {pages:Math.ceil(list.length/20),list:list.list.slice(page*20,page*20+20)}
-        return res.json(obj)
+        const list = await Movielist.aggregate([
+            { $match: { userID:new mongoose.Types.ObjectId(userID) } },
+            {
+                $project: {
+                    filtered: {
+                        $filter: {
+                            input: "$list",
+                            as: "item",
+                            cond: { $eq: ["$$item.type", type] }
+                        }
+                    }
+                }
+            }
+            ,
+            {
+                $project: {
+                    list: {
+                        $slice: [ "$filtered",10 * (page - 1), 50 ]
+                    },
+                    pages: {
+                        $ceil: { $divide: [{ $size: "$filtered" }, 50] }
+                    }
+                }
+            }
+        ]);
+        return res.json(list[0])
     }
-    catch{
+    catch (error) {
         return res.json({success:false,msg:"something went wrong"})
     }
 }

@@ -8,7 +8,7 @@ const useFetch = (url, params = {}) => {
         const fetchData = async () => {
             try {
                 const res = await api.get(url,{params});
-                if (res.status !== 200) {
+                if (res.status !== 200 || res.data.success === false) {
                     setError(`Error: ${res.statusText}`);
                     return;
                 }

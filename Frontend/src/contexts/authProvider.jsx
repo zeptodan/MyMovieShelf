@@ -6,8 +6,10 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const checkAuth = async () => {
+            setLoading(true);
             try {
                 const response = await api.get('/user/auth');
                 if (response.data.success) {
@@ -18,6 +20,9 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (err) {
                 setIsAuthenticated(false);
+            }
+            finally {
+                setLoading(false);
             }
         };
         checkAuth();
@@ -47,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout,error }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, login, logout,error,loading }}>
             {children}
         </AuthContext.Provider>
     );

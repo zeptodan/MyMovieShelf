@@ -16,7 +16,7 @@ function AppLayout() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/movielist/:paramtype" element={<MovieList/>} />
-        <Route path="/userlist/:type" element={<UserList/>} />
+        <Route path="/userlist/:paramtype" element={<UserList/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/movie/:id" element={<SingleMovie/>} />
