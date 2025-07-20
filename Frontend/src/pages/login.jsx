@@ -1,8 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/authProvider";
 import { useEffect } from "react";
+import { useNotification } from "../contexts/notificationProvider";
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const {addNotification} = useNotification();
+    const { message } = location.state || {};
+    useEffect(() => {
+        if (message) {
+            addNotification(message);
+        }
+    }, []);
     const { login,isAuthenticated,error } = useAuth();
     const handleSubmit = async(e) => {
         e.preventDefault();

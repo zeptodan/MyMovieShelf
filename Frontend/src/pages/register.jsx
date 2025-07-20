@@ -10,7 +10,7 @@ const Register = () => {
         const password = e.target.password.value;
         const res = await api.post('/signup', { name: username, password })
         if (res.data.success) {
-            navigate("/login");
+            navigate("/login", { state: { message: "Registration successful! Please login." } });
         }
         else {
             setError(res.data.msg);
