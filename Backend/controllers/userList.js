@@ -69,8 +69,6 @@ const updateRating = async(req,res)=>{
     const {userID} = req.user
     const {rating,id} = req.body
     try {
-        console.log(rating)
-        console.log(id)
         await Movielist.updateOne(
             {userID:userID,"list.id":id},
             {$set:{"list.$.rating":rating}},
