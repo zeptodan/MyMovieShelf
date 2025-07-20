@@ -27,8 +27,11 @@ const UserList = () => {
       navigate("/userlist/watchlist");
     }
   }, [isAuthenticated]);
-  if (!isAuthenticated || (type !== "watchlist" && type !== "completed") || loading) {
+  if ((!isAuthenticated || (type !== "watchlist" && type !== "completed")) && loading) {
     return null;
+  }
+  if (!isAuthenticated && !loading) {
+    return navigate("/login");
   }
   const handleAddToList = async(e) =>{
     e.stopPropagation();
