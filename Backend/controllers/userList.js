@@ -54,7 +54,7 @@ const postMovie = async(req,res)=>{
                     api_key:process.env.TMDB_KEY,
                 }
             })
-            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_path:TMDBmovie.data.poster_path,type:type,release_date:TMDBmovie.data.release_date,original_language:TMDBmovie.data.original_language,vote_average:TMDBmovie.data.vote_average}
+            const movie = {id:TMDBmovie.data.id,title:TMDBmovie.data.title,poster_path:TMDBmovie.data.poster_path,type:type,release_date:TMDBmovie.data.release_date,original_language:TMDBmovie.data.original_language,vote_average: Math.round(TMDBmovie.data.vote_average*10)/10 }
             await Movielist.updateOne(
                 {userID:userID},
                 {$push : {list:movie}}
@@ -67,9 +67,10 @@ const postMovie = async(req,res)=>{
 }
 const updateRating = async(req,res)=>{
     const {userID} = req.user
-    const id = req.query.id
+    const {rating,id} = req.body
     try {
-        const rating = Number(req.query.rating)
+        console.log(rating)
+        console.log(id)
         await Movielist.updateOne(
             {userID:userID,"list.id":id},
             {$set:{"list.$.rating":rating}},

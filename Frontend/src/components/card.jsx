@@ -17,6 +17,7 @@ const Card = ({movie }) => {
         e.stopPropagation();
         if (!isAuthenticated) {
             navigate("/login");
+            return
         }
         const type = e.currentTarget.id;
         const id = e.currentTarget.parentElement.parentElement.id;
