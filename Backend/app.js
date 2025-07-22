@@ -20,7 +20,7 @@ app.use(cookieParser())
 
 app.use(helmet())
 app.use(cors({
-  origin: 'https://my-movie-shelf-wheat.vercel.app/',
+  origin: 'https://my-movie-shelf-wheat.vercel.app',
   credentials: true
 }))
 app.use(rateLimiter({
