@@ -34,7 +34,7 @@ const login = async (req,res)=>{
         return res.json({success:false,msg:"Invalid password"})
     }
     const jwt=thisUser.createJWT()
-    res.cookie("token",jwt,{httpOnly:true})
+    res.cookie("token",jwt,{httpOnly:true,sameSite:'none',secure:true})
     return res.json({success:true,msg:"user logged in"})
 }
 
